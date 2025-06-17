@@ -18,18 +18,25 @@
     }
     .buttons{
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         gap:0.5rem;
         justify-content: end;
+        @media (min-width:468px) {
+            flex-direction: row;
+        }
         button{
             padding: 0.4rem 0.8rem;
             background-color: rgb(83, 117, 135);
             transition: all 0.2s ease-out;
             border: none;
             border-radius: 10px;
+            cursor: pointer;
             &:hover{
                 background-color: rgb(57, 57, 83);
                 color: white;
+            }
+            &:active{
+                outline: none;
             }
         }
     }
