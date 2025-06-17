@@ -1,12 +1,21 @@
 <section class="posts">
     @for(data of postlistdata;track $index){
-    <a routerLink="data.id" >
         <div class="post">
-        <h2>{{data.title}}</h2>
-        <p>
-            {{data.body}}
-        </p>
+            <h2>{{data.title}}</h2>
+            <p>
+                {{data.body}}
+            </p>
+             <div class="buttons">
+            <a [routerLink]="[data.id]">
+                <button>View Comments</button>
+            </a>
+            <a routerLink="">
+                <button>Edit</button>
+            </a>
+            <a href="">
+                <button>Delete</button>
+            </a>
         </div>
-    </a>
+        </div>
 }
 </section>

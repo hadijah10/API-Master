@@ -1,0 +1,14 @@
+@if(id == null){
+    <p>No post with such id</p>
+}
+@else {
+  <section class="comments">
+     @for(comment of postcomments;track $index){
+     <div class="postcomment">
+        <h4>Username: {{comment.name}}</h4>
+        <h4>Email: {{comment.email}}</h4>
+        <p>{{comment.body}}</p>
+    </div>
+   }
+  </section>
+}

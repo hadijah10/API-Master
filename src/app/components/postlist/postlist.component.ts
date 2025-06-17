@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { IPostList } from '../../models/interfaces/datainterface';
 import { ApiService } from '../../services/api.service';
 import { retry, tap } from 'rxjs';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-postlist',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './postlist.component.html',
   styleUrl: './postlist.component.scss'
 })
