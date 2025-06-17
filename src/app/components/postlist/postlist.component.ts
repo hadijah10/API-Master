@@ -17,8 +17,8 @@ export class PostlistComponent {
       tap(data => this.postlistdata = data ),
       retry(2),
      ).subscribe({
-      next:(data) => { },
-      error:(err) => {},
+      next:(data) => {},
+      error:(err) => {this.apiservice.handleError(err)},
       complete:() => {}
     })
   }
