@@ -23,17 +23,9 @@ export class SinglepostComponent implements OnInit,OnDestroy{
       }
       
       ngOnInit(): void {
-        this.subscription = this.apiservice.getsinglePostComments(this.id)
-        .pipe(
-          tap(data => { this.postcomments = data}),
-          retry(2),
-          catchError((error) => {
-            // this.apiservice.handleError(error)
-            return throwError(() => new Error('Failed to fecth products.',error));
-          })
-        ).subscribe({
-          next:(data => {}),
-          error:(error => {}),
+        this.subscription = this.apiservice.getSinglePostComments(this.id).subscribe({
+          next:(data) => {this.postcomments = data},
+          error:(error) => {console.log(error)},
           complete:() => {}
         })
       }

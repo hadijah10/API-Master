@@ -12,15 +12,30 @@ export class ApiService {
   constructor(private http:HttpClient) { }
 
   getPosts():Observable<IPostList[]>{
-    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`)
+    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts3`).pipe(
+      catchError(error => this.handleError(error))
+    )
   }
-  getsinglePostComments(postId:string | null){
-    return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
+  getSinglePostComments(postId:string | null){
+    return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`).pipe(
+      catchError(error => this.handleError(error))
+    )
   }
-  deletePost(postId:number){
-    return this.http.delete(`${environment.apiUrl}/${postId}`)
+  deletePost(postId:number):Observable<any>{
+    return this.http.delete(`${environment.apiUrl}/${postId}`).pipe(
+      catchError(error => this.handleError(error))
+    )
   }
-   handleError(error: HttpErrorResponse){
-    return throwError(()=> new Error('Could not reach data'));
+   handleError(error: any){
+    let errormessage = ''
+    let errorstatus = ''
+    if(error.error instanceof ErrorEvent){
+      errormessage = error.message
+      errorstatus = error.status
+    }
+    else{
+
+    }
+    return throwError(()=> new Error(errormessage + errorstatus));
   }
 }
