@@ -4,7 +4,7 @@ import { PostlistComponent } from './components/postlist/postlist.component';
 
 @Component({
   selector: 'app-root',
-  imports: [PostlistComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

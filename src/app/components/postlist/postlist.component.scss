@@ -1,0 +1,32 @@
+.post{
+    width:90%;
+    background-color: rgb(38, 47, 63);
+    color: white;
+    padding: 1rem;
+    border-radius: 10px;
+    display: grid;
+    gap:1rem;
+    cursor: pointer;
+    align-items: center;
+    h2{
+        font-size: 24px;
+        font-weight: 500;
+    }
+    p{
+        font-size: 16px;
+        font-weight: 300;
+    }
+    @media(min-width: 748px){
+        width:35rem;
+    }
+}
+.posts{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap:1rem;
+    a{
+        display: block;
+        text-decoration: none;
+    }
+}

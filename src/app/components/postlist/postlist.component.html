@@ -1,3 +1,12 @@
-@for(data of postlistdata;track $index){
-    <p>{{data.title}}</p>
+<section class="posts">
+    @for(data of postlistdata;track $index){
+    <a routerLink="data.id" >
+        <div class="post">
+        <h2>{{data.title}}</h2>
+        <p>
+            {{data.body}}
+        </p>
+        </div>
+    </a>
 }
+</section>
