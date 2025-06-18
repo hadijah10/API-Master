@@ -1,5 +1,6 @@
 .comments{
     display: grid;
+    justify-content: center;
     gap:1rem;
 
 }
@@ -12,8 +13,8 @@
     border-radius: 10px;
     width:90%;
     padding: 1rem;
-    @media (min-width:748px) {
-        width:35rem;
+    @media (min-width:992px) {
+        width:50rem;
     
     }
     h4{

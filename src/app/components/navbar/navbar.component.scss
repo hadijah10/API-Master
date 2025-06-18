@@ -10,4 +10,20 @@ nav{
     background-color: rgb(42, 42, 75);
     color:white;
     @include flex(row,space-between,center);
+    padding: 0.5rem 1rem;
+    .actions{
+        @include flex($gap:1rem)
+    }
+    .name{
+        text-decoration: none;
+        color: white;
+    }
+    .actions a{
+        text-decoration: none;
+        color: white;
+        transition: all 0.2s ease-in-out;
+        &:hover{
+            color: rgb(77, 166, 244);
+        }
+    }
 }
