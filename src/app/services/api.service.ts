@@ -46,6 +46,11 @@ export class ApiService {
         catchError((error) => this.handleErrorService.handleError(error))
       );
   }
+  createpost(newpost:any){
+    const posts = this.posts.getValue()
+     this.posts.next([newpost,...posts])
+  }
+
   deletePost(postId: number) {
     return this.http
       .delete(`${environment.apiUrl}/posts/${postId}`)

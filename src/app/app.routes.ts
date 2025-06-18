@@ -9,12 +9,13 @@ export const routes: Routes = [
         path:'',
         component: PostlistComponent
     },
+     {
+        path:'createpost',
+        component: CreatepostComponent
+    },
     {
         path:':id',
         component: SinglepostComponent
     },
-    {
-        path:'createpost',
-        component: CreatepostComponent
-    }
+   
 ];
