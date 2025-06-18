@@ -1,41 +1,65 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, retry,throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  Observable,
+  retry,
+  throwError,
+} from 'rxjs';
 import { IPostComment, IPostList } from '../models/interfaces/datainterface';
 import { environment } from '../../environments/environment.development';
 import { inject } from '@angular/core';
 import { ErrorhandlingService } from './errorhandling.service';
+import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
-  handleErrorService =inject(ErrorhandlingService)
-  private posts = new BehaviorSubject<IPostList[]>([])
-  public postSubject$ = this.posts.asObservable()
-  constructor(private http:HttpClient) { }
+  handleErrorService = inject(ErrorhandlingService);
+  private posts = new BehaviorSubject<IPostList[]>([]);
+  public postSubject$ = this.posts.asObservable();
 
-  getPosts(){
+  constructor(private http: HttpClient) {
+    console.log('posts = ', this.posts);
+    this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).subscribe({
+      next: (data: any) => {
+        this.posts.next(data);
+        console.log('data fetched ', this.posts);
+      },
+    });
+  }
+
+  getPosts(): Observable<IPostList[]> {
     return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
       retry(2),
-      catchError(error => this.handleErrorService.handleError(error))
-    ).subscribe({
-      next: (data) => {
-        this.posts.next([...data])
-      }
-    })
+      tap((data) => this.posts.next(data)),
+      catchError((error) => this.handleErrorService.handleError(error))
+    );
   }
-  getSinglePostComments(postId:string | null){
-    return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`).pipe(
-      retry(2),
-      catchError(error => this.handleErrorService.handleError(error))
-    )
+  getSinglePostComments(postId: string | null) {
+    return this.http
+      .get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
+      .pipe(
+        retry(2),
+        catchError((error) => this.handleErrorService.handleError(error))
+      );
   }
-  deletePost(postId:number):Observable<any>{
-    return this.http.delete(`${environment.apiUrl}/${postId}`).pipe(
-      retry(2),
-      catchError(error => this.handleErrorService.handleError(error))
-    )
+  deletePost(postId: number) {
+    return this.http
+      .delete(`${environment.apiUrl}/posts/${postId}`)
+      .pipe(
+        retry(2),
+        catchError((error) => this.handleErrorService.handleError(error))
+      )
+      .subscribe({
+        next: (data) => {
+          const getposts = this.posts.getValue();
+          const newpost = getposts.filter((data) => data.id !== postId);
+          console.log(newpost.length);
+          this.posts.next(newpost);
+        },
+      });
   }
- 
 }
