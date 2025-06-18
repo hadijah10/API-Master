@@ -3,10 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { IPostComment, IPostList } from '../../models/interfaces/datainterface';
 import { Subscription,tap,retry, catchError, throwError } from 'rxjs';
 import { ApiService } from '../../services/api.service';
+import { LoaderComponent } from '../loader/loader.component';
 
 @Component({
   selector: 'app-singlepost',
-  imports: [],
+  imports: [LoaderComponent],
   templateUrl: './singlepost.component.html',
   styleUrl: './singlepost.component.scss'
 })
@@ -15,6 +16,7 @@ export class SinglepostComponent implements OnInit,OnDestroy{
       id:string | null = null
       postcomments:IPostComment[] = []
       subscription = new Subscription();
+      isLoading:boolean = true
 
       constructor(private apiservice: ApiService ){
         this.route.paramMap.subscribe((params) => {
@@ -24,8 +26,12 @@ export class SinglepostComponent implements OnInit,OnDestroy{
       
       ngOnInit(): void {
         this.subscription = this.apiservice.getSinglePostComments(this.id).subscribe({
-          next:(data) => {this.postcomments = data},
-          error:(error) => {console.log(error)},
+          next:(data) => {
+            this.isLoading = false
+            this.postcomments = data},
+          error:(error) => {
+            this.isLoading = false
+            console.log(error)},
           complete:() => {}
         })
       }

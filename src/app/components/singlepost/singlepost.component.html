@@ -2,7 +2,11 @@
     <p>No post with such id</p>
 }
 @else {
-  <section class="comments">
+    @if(isLoading == true){
+        <app-loader></app-loader>
+    }
+    @else {
+        <section class="comments">
      @for(comment of postcomments;track $index){
      <div class="postcomment">
         <h4>Username: {{comment.name}}</h4>
@@ -11,4 +15,6 @@
     </div>
    }
   </section>
+    }
+  
 }

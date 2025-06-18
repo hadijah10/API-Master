@@ -1,5 +1,9 @@
 <section class="posts">
-    @for(data of postlistdata;track $index){
+    @if(isLoading == true){
+        <app-loader></app-loader>
+    }
+    @else {
+            @for(data of postlistdata;track $index){
         <div class="post">
             <h2>{{data.title}}</h2>
             <p>
@@ -18,4 +22,6 @@
         </div>
         </div>
 }
+    }
+
 </section>
