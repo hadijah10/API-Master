@@ -40,15 +40,15 @@
             }
         }
     }
-    @media(min-width: 748px){
-        width:35rem;
+    @media(min-width: 992px){
+        width:60rem;
       
     }
 }
 .posts{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
     gap:1rem;
     a{
         display: block;

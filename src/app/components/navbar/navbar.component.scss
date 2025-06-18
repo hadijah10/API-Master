@@ -1,0 +1,13 @@
+@mixin flex($direction:row,$justify:stretch,$align:start,$gap:0){
+    display:flex;
+    flex-direction:$direction;
+    justify-content: $justify;
+    align-items: $align;
+    gap:$gap;
+}
+nav{
+    width:100%;
+    background-color: rgb(42, 42, 75);
+    color:white;
+    @include flex(row,space-between,center);
+}
