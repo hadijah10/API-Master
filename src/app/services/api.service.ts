@@ -12,7 +12,7 @@ export class ApiService {
   constructor(private http:HttpClient) { }
 
   getPosts():Observable<IPostList[]>{
-    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts3`).pipe(
+    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
       catchError(error => this.handleError(error))
     )
   }

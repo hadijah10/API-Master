@@ -22,15 +22,10 @@ export class PostlistComponent {
     })
   }
   handleDelete(id:number){
-    // this.apiservice.deletePost(id).pipe(
-    //   retry(2),
-    //   catchError((error) => {
-    //      this.apiservice.handleError(error)
-    //   })
-    // ).subscribe({
-    //   next:() => {},
-    //   error:
-    // });
+    this.apiservice.deletePost(id).subscribe({
+      next:(data) => {},
+      error:(error) => {}
+    });
   }
 
 }
