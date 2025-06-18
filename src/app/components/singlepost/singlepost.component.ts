@@ -36,7 +36,7 @@ export class SinglepostComponent implements OnInit,OnDestroy{
         })
       }
       ngOnDestroy(): void {
-        
+        this.subscription.unsubscribe()
       }
 
 }

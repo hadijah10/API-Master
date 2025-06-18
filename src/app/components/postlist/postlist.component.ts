@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { IPostList } from '../../models/interfaces/datainterface';
 import { ApiService } from '../../services/api.service';
-import { catchError, retry, tap} from 'rxjs';
+import { catchError, retry, Subscription, tap} from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../loader/loader.component';
 
@@ -11,12 +11,13 @@ import { LoaderComponent } from '../loader/loader.component';
   templateUrl: './postlist.component.html',
   styleUrl: './postlist.component.scss'
 })
-export class PostlistComponent {
+export class PostlistComponent implements OnDestroy{
   postlistdata:IPostList[] | null = null
   isLoading: boolean = true
+  subscription = new Subscription()
   
   constructor(private apiservice: ApiService){
-     this.apiservice.getPosts().subscribe({
+     this.subscription = this.apiservice.getPosts().subscribe({
       next:(data) => {
         this.isLoading = false
         this.postlistdata = data},
@@ -31,6 +32,10 @@ export class PostlistComponent {
       next:(data) => {},
       error:(error) => {}
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
   }
 
 }
