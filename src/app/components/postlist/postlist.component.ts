@@ -17,13 +17,14 @@ export class PostlistComponent implements OnDestroy{
   subscription = new Subscription()
   
   constructor(private apiservice: ApiService){
-     this.subscription = this.apiservice.getPosts().subscribe({
+    this.apiservice.getPosts()
+     this.subscription = this.apiservice.postSubject$.subscribe({
       next:(data) => {
         this.isLoading = false
         this.postlistdata = data},
-      error:(err) => {
+      error:(error) => {
         this.isLoading = false
-        console.log(err)},
+        console.log(error)},
       complete:() => {}
     })
   }

@@ -4,21 +4,17 @@ import { SinglepostComponent } from './components/singlepost/singlepost.componen
 import { CreatepostComponent } from './components/createpost/createpost.component';
 
 export const routes: Routes = [
+   
     {
         path:'',
-        redirectTo:'/posts',
-        pathMatch:'full'
-    },
-    {
-        path:'posts',
         component: PostlistComponent
     },
     {
-        path:'posts/:id',
+        path:':id',
         component: SinglepostComponent
     },
     {
-        path:'posts/createpost',
+        path:'createpost',
         component: CreatepostComponent
     }
 ];

@@ -1,44 +1,41 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry,throwError } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, retry,throwError } from 'rxjs';
 import { IPostComment, IPostList } from '../models/interfaces/datainterface';
 import { environment } from '../../environments/environment.development';
+import { inject } from '@angular/core';
+import { ErrorhandlingService } from './errorhandling.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
+  handleErrorService =inject(ErrorhandlingService)
+  private posts = new BehaviorSubject<IPostList[]>([])
+  public postSubject$ = this.posts.asObservable()
   constructor(private http:HttpClient) { }
 
-  getPosts():Observable<IPostList[]>{
+  getPosts(){
     return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
       retry(2),
-      catchError(error => this.handleError(error))
-    )
+      catchError(error => this.handleErrorService.handleError(error))
+    ).subscribe({
+      next: (data) => {
+        this.posts.next([...data])
+      }
+    })
   }
   getSinglePostComments(postId:string | null){
     return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`).pipe(
       retry(2),
-      catchError(error => this.handleError(error))
+      catchError(error => this.handleErrorService.handleError(error))
     )
   }
   deletePost(postId:number):Observable<any>{
     return this.http.delete(`${environment.apiUrl}/${postId}`).pipe(
       retry(2),
-      catchError(error => this.handleError(error))
+      catchError(error => this.handleErrorService.handleError(error))
     )
   }
-   handleError(error: any){
-    let errormessage = ''
-    let errorstatus = ''
-    if(error.error instanceof ErrorEvent){
-      errormessage = error.message
-      errorstatus = error.status
-    }
-    else{
-
-    }
-    return throwError(()=> new Error(errormessage + errorstatus));
-  }
+ 
 }
