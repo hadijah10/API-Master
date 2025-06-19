@@ -1,5 +1,5 @@
 import { Component ,inject} from '@angular/core';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, ReactiveFormsModule,Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
 
@@ -13,8 +13,8 @@ export class CreatepostComponent {
   router = inject(Router)
 
   createpostForm = new FormGroup({
-    title: new FormControl(''),
-    body : new FormControl('')
+    title: new FormControl('',[Validators.required, Validators.minLength(3)]),
+    body : new FormControl('',[Validators.required, Validators.minLength(3)])
   })
   constructor(private apiservice: ApiService){}
 
@@ -25,9 +25,14 @@ export class CreatepostComponent {
       title: this.createpostForm.value.title,
       body: this.createpostForm.value.body
     }
-    this.apiservice.createpost(data)
+    if(this.createpostForm.valid){
+      this.apiservice.createpost(data)
     this.createpostForm.value.title = ''
     this.createpostForm.value.body= ''
     this.router.navigate([''])
+    }
+    else{
+      alert('Text inputs must be three characters or more')
+    }
   }
 }
