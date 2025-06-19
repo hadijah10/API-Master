@@ -12,7 +12,7 @@
         <button>View Comments</button>
       </a>
       <a routerLink="">
-        <button>Edit</button>
+        <button (click)="handleEdit(data.id)">Edit</button>
       </a>
       <a>
         <button (click)="handleDelete(data.id)">Delete</button>
@@ -20,4 +20,9 @@
     </div>
   </div>
   } }
+  @if(isEditing == true){
+    <section class="edit">
+      <app-editpost [id]="id" (isEditState)="handleEditState($event)"></app-editpost>
+    </section>
+  }
 </section>

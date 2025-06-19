@@ -4,10 +4,12 @@ import { ApiService } from '../../services/api.service';
 import { catchError, retry, Subscription, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../loader/loader.component';
+import { FormGroup,ReactiveFormsModule,FormControl,Validators} from '@angular/forms';
+import { EditpostComponent } from '../editpost/editpost.component';
 
 @Component({
   selector: 'app-postlist',
-  imports: [RouterLink, LoaderComponent],
+  imports: [RouterLink,ReactiveFormsModule,LoaderComponent,EditpostComponent],
   templateUrl: './postlist.component.html',
   styleUrl: './postlist.component.scss',
 })
@@ -15,6 +17,12 @@ export class PostlistComponent implements OnInit {
   postlistdata: IPostList[] | null = null;
   isLoading: boolean = true;
   subscription = new Subscription();
+  isEditing:boolean = false
+  id:number =0
+  editpostForm = new FormGroup({
+    title: new FormControl('',[Validators.required, Validators.minLength(3)]),
+    body : new FormControl('',[Validators.required, Validators.minLength(3)])
+  })
 
   constructor(private apiservice: ApiService) {}
 
@@ -34,10 +42,18 @@ export class PostlistComponent implements OnInit {
   }
 
   handleDelete(id: number) {
-    console.log('deleted')
     this.apiservice.deletePost(id);
     };
   
+    handleEdit(id:number){
+     this.isEditing = true
+     this.id = id
+  }
+
+  handleEditState(data:boolean){
+    this.isEditing = data
+  }
+    
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();

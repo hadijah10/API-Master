@@ -1,0 +1,8 @@
+<section class="edit">
+        <form [formGroup]="editpostForm" (ngSubmit)="handleSubmit()" class="form">
+            <input type="text" formControlName="title">
+            <input type="text" formControlName="body">
+            <button type="button" (click)="handleCancel()">Cancel</button>
+            <button type="submit">Edit</button>
+        </form>
+    </section>

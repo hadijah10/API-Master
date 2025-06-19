@@ -67,4 +67,15 @@ export class ApiService {
         },
       });
   }
+  editPost(postId:number, updatedData:any){
+    return this.http.put<any>(`${environment.apiUrl}/posts/${postId}`,updatedData).pipe(
+       retry(2),
+        catchError((error) => this.handleErrorService.handleError(error))
+    ).subscribe({
+      next:(data) => {
+        const getposts = this.posts.getValue().map(fdata => fdata.id==postId? {...fdata,data}:data)
+        this.posts.next(getposts)
+      }
+    })
+  }
 }
