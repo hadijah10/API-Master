@@ -9,7 +9,25 @@
     place-content: center;
 }
 .form{
-    width:90%;
+    width:20rem;
     display: flex;
     flex-direction: column;
+    width: 20rem;
+    padding: 1rem;
+    background-color: white;
+    color: #000000;
+    gap:1rem;
+    @media(max-width:400px){
+        width:(200px);
+    }
+}
+button{
+    background-color: rgb(56, 64, 74);
+    border: none;
+    color: white;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    &:hover{
+        background-color: rgb(18, 60, 78);
+    }
 }

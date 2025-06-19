@@ -13,6 +13,7 @@ import { inject } from '@angular/core';
 import { ErrorhandlingService } from './errorhandling.service';
 import { tap } from 'rxjs';
 
+
 @Injectable({
   providedIn: 'root',
 })
@@ -73,7 +74,7 @@ export class ApiService {
         catchError((error) => this.handleErrorService.handleError(error))
     ).subscribe({
       next:(data) => {
-        const getposts = this.posts.getValue().map(fdata => fdata.id==postId? {...fdata,data}:data)
+        const getposts = this.posts.getValue().map(fdata => fdata.id==postId? data:fdata)
         this.posts.next(getposts)
       }
     })

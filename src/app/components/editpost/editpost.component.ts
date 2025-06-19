@@ -34,10 +34,10 @@ export class EditpostComponent {
       body: this.editpostForm.value.body
     }
     if(this.editpostForm.valid){
-      this.apiservice.editPost(this.id,data)
+    this.apiservice.editPost(this.id,data)
     this.editpostForm.value.title = ''
     this.editpostForm.value.body= ''
-    this.router.navigate([''])
+    this.isEditState.emit(false)
     }
     else{
       alert('Text inputs must be three characters or more')
