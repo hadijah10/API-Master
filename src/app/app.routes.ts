@@ -1,19 +1,21 @@
 import { Routes } from '@angular/router';
 import { PostlistComponent } from './components/postlist/postlist.component';
 import { SinglepostComponent } from './components/singlepost/singlepost.component';
+import { CreatepostComponent } from './components/createpost/createpost.component';
 
 export const routes: Routes = [
+   
     {
         path:'',
-        redirectTo:'/posts',
-        pathMatch:'full'
-    },
-    {
-        path:'posts',
         component: PostlistComponent
     },
+     {
+        path:'createpost',
+        component: CreatepostComponent
+    },
     {
-        path:'posts/:id',
+        path:':id',
         component: SinglepostComponent
-    }
+    },
+   
 ];
