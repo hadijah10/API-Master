@@ -1,0 +1,42 @@
+.login{
+    width:100%;
+    display: flex;
+    justify-content: center;
+}
+.loginform{
+    width:90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:1rem;
+
+    label{
+        display: block;
+    }
+    .warning{
+        color: rgb(224, 61, 61);
+        font-size: 0.7rem;
+    }
+
+    @media (max-width: 240px){
+        width:200px;
+    }
+    @media(min-width: 992px){
+        width:20rem;
+    }
+    button{
+        background-color: rgb(46, 46, 76);
+        color: white;
+        border: none;
+        padding: 0.5rem 2rem;
+        border-radius: 10px;
+        cursor: pointer;
+        &:focus{
+            border: none;
+        }
+        &:hover{
+            background-color:rgb(55, 55, 74); ;
+        }
+    }
+}

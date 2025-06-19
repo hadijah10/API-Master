@@ -1,1 +1,31 @@
-<p>login works!</p>
+<section class="login">
+    <form [formGroup]="loginForm" (ngSubmit) ="handleSubmit()" class="loginform">
+        Login
+    <div class="inp1">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="email" formControlName="email">
+        @if (loginForm.get('email')?.invalid || (loginForm.get('email')?.touched || loginForm.get('email')?.dirty)) {
+          @if (loginForm.get('email')?.errors?.['required']) {
+            <div class="error-message warning">Email is required.</div>
+          }
+          @if (loginForm.get('email')?.errors?.['email']) {
+            <div class="error-message warning">Please enter a valid email.</div>
+          }
+        }
+    </div>
+    <div class="inp2">
+        <label for="password">Password</label>
+        <input type="password" id="password" formControlName="password" placeholder="password">
+         @if (loginForm.get('password')?.invalid || (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)) {
+          @if (loginForm.get('password')?.errors?.['required']) {
+            <div class="error-message warning">Password is required.</div>
+          }
+          @if (loginForm.get('password')?.errors?.['password']) {
+            <div class="error-message warning">Please enter a valid password.</div>
+          }
+        }
+       
+    </div>
+    <button type="submit" [disabled]="!loginForm.valid">Login</button>
+</form>
+</section>

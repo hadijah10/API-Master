@@ -4,7 +4,11 @@
     </h2>
     <div class="actions">
         <a routerLink="createpost">Create Posts</a>
-        <a routerLink="login">Login</a>
+       
+               <button *ngIf="!token" (click)="handleLogIn()">Login</button>
+      
+           <button *ngIf="token" (click)="handleLogOut()">Logout</button>
+
     </div>
 
 </nav>

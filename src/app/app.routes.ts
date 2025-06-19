@@ -10,7 +10,6 @@ export const routes: Routes = [
     {
         path:'',
         component: PostlistComponent,
-      
     },
      {
         path:'createpost',
@@ -19,12 +18,13 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        
     },
     {
         path:':id',
         component: SinglepostComponent,
-        canActivate:[AuthGuard]
+        // canActivate:[AuthGuard]
     },
    
 ];
