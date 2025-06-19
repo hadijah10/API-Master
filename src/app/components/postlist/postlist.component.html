@@ -1,0 +1,27 @@
+<section class="posts">
+    @if(isLoading == true){
+        <app-loader></app-loader>
+    }
+    @else {
+            @for(data of postlistdata;track $index){
+        <div class="post">
+            <h2>{{data.title}}</h2>
+            <p>
+                {{data.body}}
+            </p>
+             <div class="buttons">
+            <a [routerLink]="[data.id]">
+                <button>View Comments</button>
+            </a>
+            <a routerLink="">
+                <button>Edit</button>
+            </a>
+            <a href="" (click)="handleDelete(data.id)">
+                <button>Delete</button>
+            </a>
+        </div>
+        </div>
+}
+    }
+
+</section>
