@@ -1,5 +1,30 @@
-<form [formGroup]="createpostForm" (ngSubmit)="handleSubmit()">
-    <input type="text" formControlName="title">
-    <input type="text" formControlName="body">
+<section>
+    <form [formGroup]="createpostForm" (ngSubmit)="handleSubmit()" class="form">
+    <h3>Create Post</h3>
+    <div class="input1">
+    <label for="title">Title</label>
+    <input type="text" id="title" formControlName="title">
+      @if (createpostForm.get('title')?.invalid || (createpostForm.get('title')?.touched || createpostForm.get('title')?.dirty)) {
+        @if (createpostForm.get('title')?.errors?.['required']) {
+            <p class="warning">Title is required</p>
+        }
+        @if (createpostForm.get('title')?.invalid) {
+            <div class="warning">Title must be at least 3 characters</div>
+        }
+        }
+    </div>
+    <div class="input2">
+    <label for="body">Body</label>
+    <input type="text" id="body" formControlName="body">
+     @if (createpostForm.get('body')?.invalid || (createpostForm.get('body')?.touched || createpostForm.get('body')?.dirty)) {
+        @if (createpostForm.get('body')?.errors?.['required']) {
+            <p class="warning">Title is required</p>
+        }
+        @if (createpostForm.get('body')?.invalid) {
+            <div class="warning">Title must be at least 3 characters</div>
+        }
+        }
+    </div>
     <button type="submit">Submit</button>
 </form>
+</section>
