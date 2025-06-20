@@ -24,12 +24,11 @@ export class ApiService {
 
   constructor(private http: HttpClient) {
     console.log('posts = ', this.posts);
-    this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).subscribe({
-      next: (data: any) => {
-        this.posts.next(data);
-        console.log('data fetched ', this.posts);
-      },
-    });
+   this.getPosts().subscribe({
+    next:() => {},
+    error:() => {},
+    complete:() => {}
+   })
   }
 
   getPosts(): Observable<IPostList[]> {
@@ -69,7 +68,7 @@ export class ApiService {
       });
   }
   editPost(postId:number, updatedData:any){
-    return this.http.put<any>(`${environment.apiUrl}/posts/${postId}`,updatedData).pipe(
+    return this.http.put<any>(`${environment.apiUrl}/posts/1`,updatedData).pipe(
        retry(2),
         catchError((error) => this.handleErrorService.handleError(error))
     ).subscribe({

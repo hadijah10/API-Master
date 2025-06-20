@@ -20,7 +20,7 @@ export class LoginComponent {
 
   handleSubmit(){
     if(this.loginForm.valid){
-      this.auth.login({...this.loginForm.value,userID:102})
+      this.auth.login({...this.loginForm.value,userId:102})
       this.route.navigate([''])
     }
   }

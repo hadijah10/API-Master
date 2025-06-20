@@ -28,7 +28,7 @@ export class EditpostComponent {
 
   handleSubmit(){
       let data = {
-      userId : 2,
+      userId : JSON.parse(localStorage.getItem('authToken') || 'null').userId,
       Id: Date.now(),
       title: this.editpostForm.value.title,
       body: this.editpostForm.value.body
@@ -39,8 +39,6 @@ export class EditpostComponent {
     this.editpostForm.value.body= ''
     this.isEditState.emit(false)
     }
-    else{
-      alert('Text inputs must be three characters or more')
-    } 
+   
   }
 }
