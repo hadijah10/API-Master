@@ -17,11 +17,8 @@
         <label for="password">Password</label>
         <input type="password" id="password" formControlName="password" placeholder="password">
          @if (loginForm.get('password')?.invalid || (loginForm.get('password')?.touched || loginForm.get('password')?.dirty)) {
-          @if (loginForm.get('password')?.errors?.['required']) {
-            <div class="error-message warning">Password is required.</div>
-          }
-          @if (loginForm.get('password')?.errors?.['password']) {
-            <div class="error-message warning">Please enter a valid password.</div>
+          @if (loginForm.get('password')?.invalid) {
+            <div class="error-message warning">Password must be at least 8 characters</div>
           }
         }
        
