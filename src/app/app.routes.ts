@@ -4,6 +4,7 @@ import { SinglepostComponent } from './components/singlepost/singlepost.componen
 import { CreatepostComponent } from './components/createpost/createpost.component';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent } from './components/login/login.component';
+import { PagenotfoundComponent } from './components/pagenotfound/pagenotfound.component';
 
 export const routes: Routes = [
    
@@ -26,5 +27,7 @@ export const routes: Routes = [
         component: SinglepostComponent,
         // canActivate:[AuthGuard]
     },
-   
+   {
+     path: '**', component: PagenotfoundComponent
+   }
 ];
