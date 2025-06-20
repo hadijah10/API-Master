@@ -12,10 +12,10 @@
         <button>View Comments</button>
       </a>
     
-        <a routerLink="" *ngIf="token">
+        <a routerLink="" *ngIf="token?.userId == data.userId">
         <button (click)="handleEdit(data.id)">Edit</button>
       </a>
-      <a *ngIf="token">
+      <a *ngIf="token?.userId == data.userId">
         <button (click)="handleDelete(data.id)">Delete</button>
       </a>
     </div>

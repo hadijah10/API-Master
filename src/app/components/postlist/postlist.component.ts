@@ -20,7 +20,7 @@ export class PostlistComponent implements OnInit {
   subscription = new Subscription();
   isEditing:boolean = false
   id:number =0
-  token = localStorage.getItem('authToken')
+  token = JSON.parse(localStorage.getItem('authToken') || 'null')
   editpostForm = new FormGroup({
     title: new FormControl('',[Validators.required, Validators.minLength(3)]),
     body : new FormControl('',[Validators.required, Validators.minLength(3)])
