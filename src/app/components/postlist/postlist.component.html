@@ -8,7 +8,7 @@
       {{ data.body }}
     </p>
     <div class="buttons">
-      <a [routerLink]="[data.id]">
+      <a *ngIf="data.id != undefined" [routerLink]="[data.id]">
         <button>View Comments</button>
       </a>
     
