@@ -1,59 +1,133 @@
-# AngularAPI
+# API‑Master
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.14.
+## Introduction
 
-## Development server
+This project is a thoughtfully-crafted Angular application that showcases RESTful CRUD with pagination, in-memory caching via `HttpInterceptor`, and SCSS-powered custom styles. It serves as a learning template and foundation for building responsive and maintainable data-driven front-end apps.
 
-To start a local development server, run:
+---
 
-```bash
-ng serve
-```
+## 🧭 Features
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+- **CRUD Operations** (Create, Read, Update, Delete) on posts via a REST API.
+- **Paginated GET Requests** with `_page` and `_limit` query parameters.
+- **Http Caching Interceptor** for optimizing pagination performance.
+- **Reactive State Management** with `BehaviorSubject`.
+- **Error Handling** via a centralized `ErrorHandlingService`.
+- **SCSS Styling** and custom pagination components.
+- **Optional Integration** with JSONPlaceholder or other REST API backends.
 
-## Code scaffolding
+---
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## 🚀 Getting Started
 
-```bash
-ng generate component component-name
-```
+### Prerequisites
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+- [Node.js](https://nodejs.org) (v14+)
+- [Angular CLI](https://cli.angular.io/) (v12+)
+- Internet access for connecting to REST API ( JSONPlaceholder api)
 
-```bash
-ng generate --help
-```
+### Installation
 
-## Building
+1. **Clone the repo**
+   ```bash
+   git clone https://github.com/hadijah10/API-Master.git
+   cd API-Master
 
-To build the project run:
+2. **Install dependencies**
+   run npm install 
 
-```bash
-ng build
-```
+3. **Run the app**
+   ng serve
+   Visit http://localhost:4200 in your browser.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## 🛠️ Usage Guide
+1. 📄 View and Page Through Posts
+On load, the app fetches posts using pagination parameters.
 
-## Running unit tests
+2. Use ← and → buttons or page numbers to browse different pages.
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+3. ➕ Create a New Post
+Add a new post using the form on the page.The newly created post appears at the top of the current list.
 
-```bash
-ng test
-```
+4. ✏️ Edit or Delete Posts
+Edit inline or delete posts via corresponding UI controls.Edits and deletions are reflected immediately in the list.
 
-## Running end-to-end tests
+## ⚡ Caching
+Programmatic GET requests (e.g. page navigation) are cached for 5 minutes.
 
-For end-to-end (e2e) testing, run:
+Changing pages within cache duration will reuse data without new API calls.
 
-```bash
-ng e2e
-```
+## 💡 Project Structure
+API-Master/
+├── README.md
+├── angular.json
+├── package.json
+├── tsconfig.json
+└── src/
+    ├── app/
+    │   ├── app.module.ts
+    │   ├── app.component.ts
+    │   ├── services/
+    │   │   ├── api.service.ts
+    │   │   └── auth.service.ts
+    │   └── components/
+    │       ├── navbar/
+    │       │   ├── navbar.component.ts
+    │       │   ├── navbar.component.html
+    │       │   └── navbar.component.scss
+    │       ├── home/
+    │       │   ├── home.component.ts
+    │       │   ├── home.component.html
+    │       │   └── home.component.scss
+    │       └── login/
+    │           ├── login.component.ts
+    │           ├── login.component.html
+    │           └── login.component.scss
+    ├── assets/
+    └── environments/
+        ├── environment.ts
+        └── environment.prod.ts
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+        src/
+    ├── app/
+    │   ├── interceptors/
+    │   │   └── authinterceptor.ts         # Add auth token to authorization header
+    │   ├── services/
+    │   │   ├── api.service.ts              # CRUD + pagination logic
+    │   │   └── errorhandling.service.ts    # Centralized error handling
+    |   |   |__ auth.service.ts             # Centralized authentication.
+    |   |   |__ cacheservice.ts             # Managing of cache
+    |   |   |__ components
+    |   |   │   ├── posts/
+    |   |   │   │   ├── posts.component.ts          # UI logic
+    |   |   │   │   ├── posts.component.html        # Post list + pagination controls
+    |   |   │   │   └── posts.component.scss        # SCSS styling
+    |   |   │   ├── createpost/                     # Createpost html,scc and logic
+    |   |   │   ├── editpost/                       # Editpost html,scc and logic
+    |   |   │   ├── loader/                         # loader html,scc
+    |   |   │   ├── navbar/                         # Navbar html,scc and logic
+    |   |   │   ├── pagenotfound/                   # Pagenotfound html,scc
+    |   |   │   ├── postlist/                       # Postlist html,scc and logic
+    |   |   │   ├── singlepost/                     # Singlepost html,scc and logic
+    |   |   |   |__ guards                          # 
+    |   |   |   |   └──auth.guards.ts               #Guard to protect page until authentication
+    |   |   │   ├── models/interfaces/
+    |   |   │   │   └── datainterface.ts            # TypeScript interfaces
+    |   |   │   │   └── cachemodel.ts               # TypeScript interfaces for cacheentry
+    │   └── app.module.ts                   # Module & interceptor setup
+    ...
 
-## Additional Resources
+   
+### 🤝 Contributing
+Contributions are welcome! Here's how to get started:
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+1. Fork the project
+
+2. Create a feature branch: git checkout -b feature/YourFeature
+
+3. Commit your changes: git commit -m "Add some feature"
+
+4. Push to your branch: git push origin feature/YourFeature
+
+5. Open a Pull Request
+
