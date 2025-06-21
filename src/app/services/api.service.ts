@@ -31,6 +31,17 @@ export class ApiService {
    })
   }
 
+  // post.service.ts
+// getPosts(page: number, limit: number): Observable<any> {
+//   const url = `${environment.apiUrl}/posts?_page=${page}&_limit=${limit}`;
+//   return this.http.get(url).pipe(
+//       retry(2),
+//       tap((data) => this.posts.next(data)),
+//       catchError((error) => this.handleErrorService.handleError(error))
+//     ); // get full response to read headers
+// }
+
+
   getPosts(): Observable<IPostList[]> {
     return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
       retry(2),
@@ -39,8 +50,7 @@ export class ApiService {
     );
   }
   getSinglePostComments(postId: string | null) {
-    return this.http
-      .get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
+    return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
       .pipe(
         retry(2),
         catchError((error) => this.handleErrorService.handleError(error))

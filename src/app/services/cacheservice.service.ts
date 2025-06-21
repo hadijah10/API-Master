@@ -17,17 +17,25 @@ export class RequestCacheService {
       return null;
     }
 
-    const isExpired = (Date.now() - cached.entryTime) > MAX_CACHE_AGE;
+    const isExpired = (Date.now() - cached.entryTime) > MAX_CACHE_AGE;  // Cache duration in milliseconds (e.g., 5 minutes)
     if (isExpired) {
       this.cache.delete(url);
       return null;
     }
-
+    console.log('cache hit')
+    console.log(this.cache)
     return cached.response;
   }
 
   put(url: string, response: HttpResponse<any>): void {
     const entry: CacheEntry = { url, response, entryTime: Date.now() };
+    console.log('cach miss')
+       console.log(this.cache)
     this.cache.set(url, entry);
+  }
+  clearCache(){
+    console.log('cahce clear')
+       console.log(this.cache)
+    this.cache.clear();
   }
 }
