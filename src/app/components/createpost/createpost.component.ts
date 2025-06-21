@@ -2,6 +2,7 @@ import { Component ,inject} from '@angular/core';
 import { FormGroup, FormControl, ReactiveFormsModule,Validators } from '@angular/forms';
 import { ApiService } from '../../services/api.service';
 import { Router } from '@angular/router';
+import { ValidationSentence } from '../../validators/sentence.validator';
 
 @Component({
   selector: 'app-createpost',
@@ -13,8 +14,8 @@ export class CreatepostComponent {
   router = inject(Router)
 
   createpostForm = new FormGroup({
-    title: new FormControl('',[Validators.required, Validators.minLength(3)]),
-    body : new FormControl('',[Validators.required, Validators.minLength(3)])
+    title: new FormControl('',[Validators.required, Validators.minLength(3),ValidationSentence]),
+    body : new FormControl('',[Validators.required, Validators.minLength(3),ValidationSentence])
   })
   constructor(private apiservice: ApiService){}
 
