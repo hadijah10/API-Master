@@ -8,8 +8,9 @@
         @if (createpostForm.get('title')?.errors?.['required']) {
             <p class="warning">Title is required</p>
         }
-        @if (createpostForm.get('title')?.invalid) {
+        @if (createpostForm.get('title')?.invalid && createpostForm.get('title')?.dirty) {
             <div class="warning">Title must be at least 3 characters</div>
+            <p class="warning">Must not contain abusive words</p>
         }
         }
     </div>
@@ -18,13 +19,14 @@
     <input type="text" id="body" formControlName="body">
      @if (createpostForm.get('body')?.invalid || (createpostForm.get('body')?.touched || createpostForm.get('body')?.dirty)) {
         @if (createpostForm.get('body')?.errors?.['required']) {
-            <p class="warning">Title is required</p>
+            <p class="warning">Body is required</p>
         }
         @if (createpostForm.get('body')?.invalid) {
-            <div class="warning">Title must be at least 3 characters</div>
+            <div class="warning">Body must be at least 3 characters</div>
+             <p class="warning">Must not contain abusive words</p>
         }
         }
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit" [disabled]="!createpostForm.valid">Submit</button>
 </form>
 </section>
