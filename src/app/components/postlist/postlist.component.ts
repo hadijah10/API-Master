@@ -26,7 +26,7 @@ export class PostlistComponent implements OnInit {
     body : new FormControl('',[Validators.required, Validators.minLength(3)])
   })
 
-  constructor(private apiservice: ApiService) {}
+  constructor(protected apiservice: ApiService) {}
   currentPage = 1;
   limit = 10;
   totalItems = 100;
@@ -47,7 +47,7 @@ export class PostlistComponent implements OnInit {
     this.loadposts()
   }
   loadposts(){
-    this.apiservice.getPosts(this.currentPage, this.limit).subscribe({
+    this.subscription = this.apiservice.getPosts(this.currentPage, this.limit).subscribe({
       next: (data) => {
       this.isLoading =
       this.postlistdata = data;
