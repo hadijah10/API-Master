@@ -54,4 +54,44 @@
         display: block;
         text-decoration: none;
     }
+    .postsection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    .pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+
+  button {
+    padding: 0.4rem 0.8rem;
+    border: none;
+    background: #d1d1d6;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &.active {
+      background: #213f5f ;
+      color: white;
+      font-weight: bold;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background:#90b3db;
+      color: white;
+    }
+  }
 }
+    }
+}
+
+
+
+

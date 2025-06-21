@@ -26,21 +26,51 @@ export class PostlistComponent implements OnInit {
     body : new FormControl('',[Validators.required, Validators.minLength(3)])
   })
 
-  constructor(private apiservice: ApiService) {}
-
+  constructor(protected apiservice: ApiService) {}
+  currentPage = 1;
+  limit = 10;
+  totalItems = 100;
   ngOnInit(): void {
-    this.subscription = this.apiservice.postSubject$.subscribe({
-      next: (data) => {
-        this.isLoading = false;
-        this.postlistdata = data;
+    // this.subscription = this.apiservice.postSubject$.subscribe({
+    //   next: (data) => {
+    //     this.isLoading = false;
+    //     this.postlistdata = data;
         
-      },
-      error: (error) => {
-        this.isLoading = false;
-        console.log(error);
-      },
-      complete: () => {},
+    //   },
+    //   error: (error) => {
+    //     this.isLoading = false;
+    //     console.log(error);
+    //   },
+    //   complete: () => {},
+    // });
+  
+    this.loadposts()
+  }
+  loadposts(){
+    this.subscription = this.apiservice.getPosts(this.currentPage, this.limit).subscribe({
+      next: (data) => {
+      this.isLoading =
+      this.postlistdata = data;
+    },
+    error:(err)=> {
+       this.isLoading = false;
+    },
+     complete: () => {},
     });
+  }
+
+   goToPage(page: number): void {
+    if (page < 1 || page > this.totalPages()) return;
+    this.currentPage = page;
+    this.loadposts();
+  }
+
+    totalPages(): number {
+    return Math.ceil(this.totalItems / this.limit);
+  }
+
+   pages(): number[] {
+    return Array.from({ length: this.totalPages() }, (_, i) => i + 1);
   }
 
   handleDelete(id: number) {

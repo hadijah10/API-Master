@@ -1,8 +1,28 @@
 <section class="posts">
   @if(isLoading == true){
   <app-loader></app-loader>
-  } @else { @for(data of postlistdata;track $index){
-  <div class="post">
+  } @else {
+    <section class="postsection">
+      <div *ngFor="let data of (apiservice.postSubject$ | async)">
+       <div class="post">
+         <h2>{{ data.title }}</h2>
+        <p>{{ data.body }}</p>
+         <div class="buttons">
+      <a *ngIf="data.id != undefined" [routerLink]="[data.id]">
+        <button>View Comments</button>
+      </a>
+    
+        <a routerLink="" *ngIf="token?.userId == data.userId">
+        <button (click)="handleEdit(data.id)">Edit</button>
+      </a>
+      <a *ngIf="token?.userId == data.userId">
+        <button (click)="handleDelete(data.id)">Delete</button>
+      </a>
+    </div>
+       </div>
+      </div>
+       @for(data of postlistdata;track $index){
+    <div class="post">
     <h2>{{ data.title }}</h2>
     <p>
       {{ data.body }}
@@ -20,7 +40,16 @@
       </a>
     </div>
   </div>
-  } }
+  } 
+  <div class="pagination">
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">« Prev</button>
+  <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="page === currentPage">
+    {{ page }}
+  </button>
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages()">Next »</button>
+</div>
+    </section>
+}
   @if(isEditing == true){
     <section class="edit">
       <app-editpost [id]="id" (isEditState)="handleEditState($event)"></app-editpost>

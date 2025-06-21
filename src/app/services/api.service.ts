@@ -19,36 +19,34 @@ import { tap } from 'rxjs';
 })
 export class ApiService {
   handleErrorService = inject(ErrorhandlingService);
-  private posts = new BehaviorSubject<IPostList[]>([]);
+  private posts = new BehaviorSubject<IPostList[] | any[]>([]);
   public postSubject$ = this.posts.asObservable();
 
   constructor(private http: HttpClient) {
-    console.log('posts = ', this.posts);
-   this.getPosts().subscribe({
-    next:() => {},
-    error:() => {},
-    complete:() => {}
-   })
   }
 
-  getPosts(): Observable<IPostList[]> {
-    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
+  // post.service.ts
+getPosts(page: number, limit: number): Observable<any> {
+  const url = `${environment.apiUrl}/posts?_page=${page}&_limit=${limit}`
+  return this.http.get<IPostList[]>(url).pipe(
       retry(2),
-      tap((data) => this.posts.next(data)),
       catchError((error) => this.handleErrorService.handleError(error))
-    );
-  }
+    ); // get full response to read headers
+}
+
   getSinglePostComments(postId: string | null) {
-    return this.http
-      .get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
+    return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
       .pipe(
         retry(2),
         catchError((error) => this.handleErrorService.handleError(error))
       );
   }
-  createpost(newpost:any){
-    const posts = this.posts.getValue()
-     this.posts.next([newpost,...posts])
+  createpost(newpost:IPostList |any){
+    const oldposts = this.posts.getValue()
+    console.log('create')
+     this.posts.next([newpost,...oldposts])
+     console.log(newpost)
+     console.log(this.posts.getValue())
   }
 
   deletePost(postId: number) {
@@ -61,10 +59,10 @@ export class ApiService {
       .subscribe({
         next: (data) => {
           const getposts = this.posts.getValue();
-          const newpost = getposts.filter((data) => data.id !== postId);
-          console.log(newpost.length);
+          const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
           this.posts.next(newpost);
         },
+        error:(error)=> {}
       });
   }
   editPost(postId:number, updatedData:any){
@@ -73,7 +71,7 @@ export class ApiService {
         catchError((error) => this.handleErrorService.handleError(error))
     ).subscribe({
       next:(data) => {
-        const getposts = this.posts.getValue().map(fdata => fdata.id==postId? data:fdata)
+        const getposts = this.posts.getValue().map((fdata:IPostList | any) => fdata.id==postId? data:fdata)
         this.posts.next(getposts)
       }
     })
