@@ -20,6 +20,16 @@
     @media(max-width:400px){
         width:(200px);
     }
+    label{
+        display: block;
+    }
+    input{
+        width:inherit;
+    }
+     .warning{
+          color: rgb(224, 61, 61);
+        font-size: 0.7rem;
+    }
 }
 button{
     background-color: rgb(56, 64, 74);
@@ -30,4 +40,5 @@ button{
     &:hover{
         background-color: rgb(18, 60, 78);
     }
+   
 }

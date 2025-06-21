@@ -20,7 +20,7 @@ export class CreatepostComponent {
 
   handleSubmit(){
     let data = {
-      userId : 2,
+      userId : JSON.parse(localStorage.getItem('authToken') || 'null').userId,
       Id: Date.now(),
       title: this.createpostForm.value.title,
       body: this.createpostForm.value.body

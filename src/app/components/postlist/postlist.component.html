@@ -8,13 +8,14 @@
       {{ data.body }}
     </p>
     <div class="buttons">
-      <a [routerLink]="[data.id]">
+      <a *ngIf="data.id != undefined" [routerLink]="[data.id]">
         <button>View Comments</button>
       </a>
-      <a routerLink="">
+    
+        <a routerLink="" *ngIf="token?.userId == data.userId">
         <button (click)="handleEdit(data.id)">Edit</button>
       </a>
-      <a>
+      <a *ngIf="token?.userId == data.userId">
         <button (click)="handleDelete(data.id)">Delete</button>
       </a>
     </div>

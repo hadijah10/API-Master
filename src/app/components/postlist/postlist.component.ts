@@ -6,10 +6,11 @@ import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../loader/loader.component';
 import { FormGroup,ReactiveFormsModule,FormControl,Validators} from '@angular/forms';
 import { EditpostComponent } from '../editpost/editpost.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-postlist',
-  imports: [RouterLink,ReactiveFormsModule,LoaderComponent,EditpostComponent],
+  imports: [RouterLink,ReactiveFormsModule,LoaderComponent,EditpostComponent,CommonModule],
   templateUrl: './postlist.component.html',
   styleUrl: './postlist.component.scss',
 })
@@ -19,6 +20,7 @@ export class PostlistComponent implements OnInit {
   subscription = new Subscription();
   isEditing:boolean = false
   id:number =0
+  token = JSON.parse(localStorage.getItem('authToken') || 'null')
   editpostForm = new FormGroup({
     title: new FormControl('',[Validators.required, Validators.minLength(3)]),
     body : new FormControl('',[Validators.required, Validators.minLength(3)])

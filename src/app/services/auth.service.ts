@@ -10,9 +10,8 @@ export class AuthService {
   http=inject(HttpClient)
   constructor() { }
 
-  login(){
-    const mockToken = 'mocked-token'
-    localStorage.setItem('authToken',mockToken);
+  login(mockToken:object){
+    localStorage.setItem('authToken',JSON.stringify(mockToken));
     this.router.navigate([''])
   }
   logout(){
