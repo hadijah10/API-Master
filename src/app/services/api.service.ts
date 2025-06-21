@@ -44,8 +44,6 @@ getPosts(page: number, limit: number): Observable<any> {
   createpost(newpost:IPostList |any){
     const oldposts = this.posts.getValue()
      this.posts.next([newpost,...oldposts])
-     console.log(newpost)
-     console.log(this.posts.getValue())
   }
 
   deletePost(postId: number) {
@@ -62,9 +60,6 @@ getPosts(page: number, limit: number): Observable<any> {
       )
       .subscribe({
         next: (data) => {
-          // const getposts = this.posts.getValue();
-          // const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
-          // this.posts.next(newpost);
         },
         error:(error)=> {}
       });
