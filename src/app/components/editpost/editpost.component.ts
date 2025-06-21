@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Output ,Input} from '@angular/core';
 import { ReactiveFormsModule,FormGroup,FormControl,Validators} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { ValidationSentence } from '../../validators/sentence.validator';
 
 @Component({
   selector: 'app-editpost',
@@ -16,8 +17,8 @@ export class EditpostComponent {
   apiservice = inject(ApiService)
   editpostForm = new FormGroup(
     {
-    title: new FormControl('',[Validators.required, Validators.minLength(3)]),
-    body : new FormControl('',[Validators.required, Validators.minLength(3)])
+    title: new FormControl('',[Validators.required, Validators.minLength(3),ValidationSentence]),
+    body : new FormControl('',[Validators.required, Validators.minLength(3),ValidationSentence])
   }
   )
 
