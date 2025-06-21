@@ -1,4 +1,13 @@
-@if(id == null){
+<section class="singlepostcomment">
+    @if(isError() == true){
+     <div class="error">
+    <h4>An Error occured</h4>
+    <p>{{errorMessage}}</p> 
+    <button (click)="handleRetry()">Retry</button>
+  </div>
+}
+@else {
+    @if(id == null){
     <p>No post with such id</p>
 }
 @else {
@@ -18,3 +27,5 @@
     }
   
 }
+}
+</section>

@@ -16,7 +16,8 @@ export class ErrorhandlingService {
     }
     else{
   
-      errormessage = `Server Error: ${error.message}`
+      errormessage = `Server Error:  ${error.message}`
+      errormessage += 'Check your network'
     }
     return throwError(()=> new Error(errormessage ));
   }

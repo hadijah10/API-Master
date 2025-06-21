@@ -43,7 +43,6 @@ getPosts(page: number, limit: number): Observable<any> {
   }
   createpost(newpost:IPostList |any){
     const oldposts = this.posts.getValue()
-    console.log('create')
      this.posts.next([newpost,...oldposts])
      console.log(newpost)
      console.log(this.posts.getValue())
