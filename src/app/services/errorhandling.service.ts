@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,14 +8,16 @@ import { throwError } from 'rxjs';
 export class ErrorhandlingService {
 
   constructor() { }
-    handleError(error: HttpErrorResponse){
+    handleError(error: HttpErrorResponse): Observable<never>{
     let errormessage = 'AN unknown error occurred'
 
     if(error.error instanceof ErrorEvent){
       errormessage = `Client Error: ${error.error.message}`;
     }
     else{
-      errormessage = `Server Error: ${error.status}: ${error.message}`
+  
+      errormessage = `Server Error:  ${error.message}`
+      errormessage += 'Check your network'
     }
     return throwError(()=> new Error(errormessage ));
   }

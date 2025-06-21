@@ -1,5 +1,13 @@
 <section class="posts">
-  @if(isLoading == true){
+ @if(isError() == true){
+  <div class="error">
+    <h4>An Error occured</h4>
+    <p>{{errorMessage}}</p> 
+    <button (click)="handleRetry()">Retry</button>
+  </div>
+ }
+ @else {
+   @if(isLoading == true){
   <app-loader></app-loader>
   } @else {
     <section class="postsection">
@@ -50,6 +58,7 @@
 </div>
     </section>
 }
+ }
   @if(isEditing == true){
     <section class="edit">
       <app-editpost [id]="id" (isEditState)="handleEditState($event)"></app-editpost>

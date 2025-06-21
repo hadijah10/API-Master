@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, computed, OnDestroy, OnInit, signal } from '@angular/core';
 import { IPostList } from '../../models/interfaces/datainterface';
 import { ApiService } from '../../services/api.service';
-import { catchError, retry, Subscription, tap } from 'rxjs';
+import { catchError, EMPTY, retry, Subscription, tap } from 'rxjs';
 import { RouterLink } from '@angular/router';
 import { LoaderComponent } from '../loader/loader.component';
 import { FormGroup,ReactiveFormsModule,FormControl,Validators} from '@angular/forms';
@@ -17,6 +17,8 @@ import { CommonModule } from '@angular/common';
 export class PostlistComponent implements OnInit {
   postlistdata: IPostList[] | null = null;
   isLoading: boolean = true;
+  isError =signal<boolean>(false);
+  errorMessage:string = '';
   subscription = new Subscription();
   isEditing:boolean = false
   id:number =0
@@ -46,14 +48,23 @@ export class PostlistComponent implements OnInit {
   
     this.loadposts()
   }
+ 
   loadposts(){
-    this.subscription = this.apiservice.getPosts(this.currentPage, this.limit).subscribe({
+    this.subscription = this.apiservice.getPosts(this.currentPage, this.limit).pipe(
+      catchError(err => {
+        this.isError.set(true)
+        this.errorMessage = err;
+        return EMPTY
+      })
+    ).subscribe({
       next: (data) => {
-      this.isLoading =
+      this.isLoading = false
+      this.isError.set(false)
       this.postlistdata = data;
     },
     error:(err)=> {
        this.isLoading = false;
+       this.isError.set(true)
     },
      complete: () => {},
     });
@@ -84,6 +95,10 @@ export class PostlistComponent implements OnInit {
 
   handleEditState(data:boolean){
     this.isEditing = data
+  }
+
+  handleRetry(){
+    window.location.reload()
   }
     
 

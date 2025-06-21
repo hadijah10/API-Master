@@ -43,7 +43,6 @@ getPosts(page: number, limit: number): Observable<any> {
   }
   createpost(newpost:IPostList |any){
     const oldposts = this.posts.getValue()
-    console.log('create')
      this.posts.next([newpost,...oldposts])
      console.log(newpost)
      console.log(this.posts.getValue())
@@ -54,13 +53,18 @@ getPosts(page: number, limit: number): Observable<any> {
       .delete(`${environment.apiUrl}/posts/${postId}`)
       .pipe(
         retry(2),
+        tap(data => {
+           const getposts = this.posts.getValue();
+          const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
+          this.posts.next(newpost);
+        }),
         catchError((error) => this.handleErrorService.handleError(error))
       )
       .subscribe({
         next: (data) => {
-          const getposts = this.posts.getValue();
-          const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
-          this.posts.next(newpost);
+          // const getposts = this.posts.getValue();
+          // const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
+          // this.posts.next(newpost);
         },
         error:(error)=> {}
       });
