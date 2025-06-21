@@ -25,7 +25,7 @@ export class CachingInterceptorService implements HttpInterceptor {
 
     // Check cache for a cached response
     const cachedResponse = this.cacheService.get(req.urlWithParams);
-    if (cachedResponse) {
+    if (cachedResponse ) {
       // Return cached response as observable
       return of(cachedResponse.clone());
     }

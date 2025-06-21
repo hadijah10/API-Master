@@ -1,7 +1,9 @@
 <section class="posts">
   @if(isLoading == true){
   <app-loader></app-loader>
-  } @else { @for(data of postlistdata;track $index){
+  } @else {
+    <section class="postsection">
+       @for(data of postlistdata;track $index){
   <div class="post">
     <h2>{{ data.title }}</h2>
     <p>
@@ -20,7 +22,16 @@
       </a>
     </div>
   </div>
-  } }
+  } 
+  <div class="pagination">
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">« Prev</button>
+  <button *ngFor="let page of pages()" (click)="goToPage(page)" [class.active]="page === currentPage">
+    {{ page }}
+  </button>
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages()">Next »</button>
+</div>
+    </section>
+}
   @if(isEditing == true){
     <section class="edit">
       <app-editpost [id]="id" (isEditState)="handleEditState($event)"></app-editpost>

@@ -19,36 +19,36 @@ import { tap } from 'rxjs';
 })
 export class ApiService {
   handleErrorService = inject(ErrorhandlingService);
-  private posts = new BehaviorSubject<IPostList[]>([]);
+  private posts = new BehaviorSubject<IPostList[] | any[]>([]);
   public postSubject$ = this.posts.asObservable();
 
   constructor(private http: HttpClient) {
-    console.log('posts = ', this.posts);
-   this.getPosts().subscribe({
-    next:() => {},
-    error:() => {},
-    complete:() => {}
-   })
+  //   console.log('posts = ', this.posts);
+  //  this.getPosts(1,10).subscribe({
+  //   next:(data) => { this.posts= data},
+  //   error:() => {},
+  //   complete:() => {}
+  //  })
   }
 
   // post.service.ts
-// getPosts(page: number, limit: number): Observable<any> {
-//   const url = `${environment.apiUrl}/posts?_page=${page}&_limit=${limit}`;
-//   return this.http.get(url).pipe(
-//       retry(2),
-//       tap((data) => this.posts.next(data)),
-//       catchError((error) => this.handleErrorService.handleError(error))
-//     ); // get full response to read headers
-// }
-
-
-  getPosts(): Observable<IPostList[]> {
-    return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
+getPosts(page: number, limit: number): Observable<any> {
+  const url = `${environment.apiUrl}/posts?_page=${page}&_limit=${limit}`
+  return this.http.get<IPostList[]>(url).pipe(
       retry(2),
-      tap((data) => this.posts.next(data)),
+      tap((data) => {this.posts.next(data)}),
       catchError((error) => this.handleErrorService.handleError(error))
-    );
-  }
+    ); // get full response to read headers
+}
+
+
+  // getPosts(): Observable<IPostList[]> {
+  //   return this.http.get<IPostList[]>(`${environment.apiUrl}/posts`).pipe(
+  //     retry(2),
+  //     tap((data) => this.posts.next(data)),
+  //     catchError((error) => this.handleErrorService.handleError(error))
+  //   );
+  // }
   getSinglePostComments(postId: string | null) {
     return this.http.get<IPostComment[]>(`${environment.apiUrl}/posts/${postId}/comments`)
       .pipe(
@@ -71,8 +71,7 @@ export class ApiService {
       .subscribe({
         next: (data) => {
           const getposts = this.posts.getValue();
-          const newpost = getposts.filter((data) => data.id !== postId);
-          console.log(newpost.length);
+          const newpost = getposts.filter((data: IPostList | any) => data.id !== postId);
           this.posts.next(newpost);
         },
       });
@@ -83,7 +82,7 @@ export class ApiService {
         catchError((error) => this.handleErrorService.handleError(error))
     ).subscribe({
       next:(data) => {
-        const getposts = this.posts.getValue().map(fdata => fdata.id==postId? data:fdata)
+        const getposts = this.posts.getValue().map((fdata:IPostList | any) => fdata.id==postId? data:fdata)
         this.posts.next(getposts)
       }
     })

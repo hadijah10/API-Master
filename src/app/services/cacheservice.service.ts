@@ -29,13 +29,15 @@ export class RequestCacheService {
 
   put(url: string, response: HttpResponse<any>): void {
     const entry: CacheEntry = { url, response, entryTime: Date.now() };
-    console.log('cach miss')
-       console.log(this.cache)
     this.cache.set(url, entry);
+    this.clearCache()
   }
   clearCache(){
-    console.log('cahce clear')
-       console.log(this.cache)
-    this.cache.clear();
+        const now = Date.now();
+    this.cache.forEach((entry, url) => {
+      if (now - entry.entryTime > MAX_CACHE_AGE) this.cache.delete(url);
+    });
   }
+
+
 }
