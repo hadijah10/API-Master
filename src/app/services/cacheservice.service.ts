@@ -16,7 +16,6 @@ export class RequestCacheService {
     if (!cached) {
       return null;
     }
-
     const isExpired = (Date.now() - cached.entryTime) > MAX_CACHE_AGE;  // Cache duration in milliseconds (e.g., 5 minutes)
     if (isExpired) {
       this.cache.delete(url);
