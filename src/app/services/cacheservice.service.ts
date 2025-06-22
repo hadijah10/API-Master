@@ -21,22 +21,12 @@ export class RequestCacheService {
       this.cache.delete(url);
       return null;
     }
-    console.log('cache hit')
-    console.log(this.cache)
     return cached.response;
   }
 
   put(url: string, response: HttpResponse<any>): void {
     const entry: CacheEntry = { url, response, entryTime: Date.now() };
     this.cache.set(url, entry);
-    this.clearCache()
   }
-  clearCache(){
-        const now = Date.now();
-    this.cache.forEach((entry, url) => {
-      if (now - entry.entryTime > MAX_CACHE_AGE) this.cache.delete(url);
-    });
-  }
-
 
 }
